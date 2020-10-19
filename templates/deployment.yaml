@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: k8s-event-watcher-deployment
+  labels:
+    name: k8s-event-watcher
+  namespace: shell-operator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: k8s-event-watcher
+  template:
+    metadata:
+      labels:
+        name: k8s-event-watcher
+    spec:
+      containers:
+      - name: k8s-event-watcher
+        image: jupyterbook/shell-operator:v1.0
+        ports:
+        - containerPort: 80
+    spec:
+      containers:
+      - name: shell-operator
+        image: jupyterbook/shell-operator:simple-hook
+      serviceAccountName: shell-operator
